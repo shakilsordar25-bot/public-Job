@@ -11,11 +11,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy ZIP file
+# Copy ZIP files
+COPY app.zip /var/www/html/app.zip
 COPY browser.zip /var/www/html/browser.zip
 
-# Unzip project and remove zip
-RUN unzip browser.zip && rm browser.zip
+# Unzip both ZIP files and remove them
+RUN unzip app.zip && unzip browser.zip && rm app.zip browser.zip
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
